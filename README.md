@@ -1,5 +1,3 @@
-Voici un exemple de fichier `README.md` bien structuré pour votre projet :
-
 ---
 
 # 🎓 Répertoire NSI : Cours et Universités  
