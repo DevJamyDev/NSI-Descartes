@@ -1,6 +1,8 @@
-// Charger les données depuis le fichier JSON
 fetch('../universites.json')
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) throw new Error('Erreur de chargement des données');
+    return response.json();
+  })
   .then(data => {
     const tableBody = document.getElementById('universites-table');
     const typeFilter = document.getElementById('type');
@@ -8,48 +10,86 @@ fetch('../universites.json')
     const prixSlider = document.getElementById('prix-slider');
     const prixMaxLabel = document.getElementById('prix-max');
 
-    // Fonction pour afficher les données fitlrées
     const displayData = () => {
       const typeValue = typeFilter.value;
       const prepaValue = prepaFilter.value;
       const prixMax = parseInt(prixSlider.value, 10);
 
-      // Filtrer les données
-      const filteredData = data.filter(universite => {
+      const filteredData = data.filter(univ => {
         return (
-          (!typeValue || universite.type === typeValue) &&
-          (!prepaValue || universite.prepa === prepaValue) &&
-          universite.prix <= prixMax
+          (!typeValue || univ.type === typeValue) &&
+          (!prepaValue || univ.prepa === prepaValue) &&
+          univ.prix <= prixMax
         );
       });
 
-      // Metre à jour le tableau
       tableBody.innerHTML = '';
-      filteredData.forEach(universite => {
+      filteredData.forEach(univ => {
         const row = `
           <tr>
-            <td>${universite.nom}</td>
-            <td>${universite.ville}</td>
-            <td>${universite.type}</td>
-            <td>${universite.prepa}</td>
-            <td>${universite.prix}€</td>
-            <td><a href="${universite.site_web}" target="_blank">Visiter</a></td>
+            <td>${univ.nom}</td>
+            <td>${univ.ville}</td>
+            <td>${univ.type}</td>
+            <td>${univ.prepa}</td>
+            <td>${univ.prix}€</td>
+            <td><a href="${univ.site_web}" target="_blank">Visiter</a></td>
           </tr>
         `;
         tableBody.innerHTML += row;
       });
     };
 
-    // Mettre à jour le prix maximum affichée
     prixSlider.addEventListener('input', () => {
       prixMaxLabel.textContent = prixSlider.value;
       displayData();
     });
 
-    // Appliquer les filtres
     typeFilter.addEventListener('change', displayData);
     prepaFilter.addEventListener('change', displayData);
 
-    // Afficher toutes les universités par défaut
     displayData();
-  });
+  })
+  .catch(error => console.error('Erreur :', error));
+
+// Gérer l'ajout d'une nouvelle école
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('form-ajout-ecole');
+  const message = document.getElementById('message');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // Empêche le rechargement de la page
+
+      // Récupération des données du formulaire
+      const nouvelleEcole = {
+        nom: document.getElementById('nom').value,
+        ville: document.getElementById('ville').value,
+        type: document.getElementById('type').value,
+        prepa: document.getElementById('prepa').value,
+        prix: parseInt(document.getElementById('prix').value, 10),
+        site_web: document.getElementById('site_web').value
+      };
+
+      // Envoi des données au backend
+      try {
+        const response = await fetch('https://nsi-descartes.onrender.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(nouvelleEcole)
+        });
+
+        if (response.ok) {
+          message.style.display = 'block';
+          form.reset(); // Réinitialise le formulaire
+        } else {
+          alert("Une erreur s'est produite lors de l'ajout de l'école.");
+        }
+      } catch (error) {
+        console.error('Erreur :', error);
+        alert("Impossible de se connecter au serveur.");
+      }
+    });
+  }
+});

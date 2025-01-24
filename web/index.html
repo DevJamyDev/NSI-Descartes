@@ -3,57 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Répertoire des Études Supérieures</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background-color: #f4f4f4; }
-    .filters { margin-bottom: 20px; }
-    .slider-container { margin-top: 10px; }
-  </style>
+  <title>Répertoire NSI</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Répertoire des Études Supérieures</h1>
-
-  <div class="filters">
-    <label for="type">Type :</label>
-    <select id="type">
-      <option value="">Tous</option>
-      <option value="publique">Publique</option>
-      <option value="privée">Privée</option>
-    </select>
-
-    <label for="prepa">Prépa :</label>
-    <select id="prepa">
-      <option value="">Toutes</option>
-      <option value="prépa requise">Prépa requise</option>
-      <option value="prépa intégrée">Prépa intégrée</option>
-      <option value="sans prépa">Sans prépa</option>
-    </select>
-
-    <div class="slider-container">
-      <label for="prix-slider">Prix maximum : <span id="prix-max">20000</span>€</label>
-      <input type="range" id="prix-slider" min="0" max="20000" step="500" value="20000">
-    </div>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="ecoles.html">Répertoire des Écoles</a>
+  </nav>
+  <div class="container">
+    <h1>Bienvenue sur le Répertoire NSI</h1>
+    <p>Explorez les cours et découvrez les universités proposant des formations liées au NSI.</p>
+    <button onclick="location.href='ecoles.html'">Voir le Répertoire des Écoles</button>
   </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Ville</th>
-        <th>Type</th>
-        <th>Prépa</th>
-        <th>Prix</th>
-        <th>Site Web</th>
-      </tr>
-    </thead>
-    <tbody id="universites-table">
-      <!-- Les données seront insérées ici -->
-    </tbody>
-  </table>
-
-  <script src="script.js"></script>
 </body>
 </html>

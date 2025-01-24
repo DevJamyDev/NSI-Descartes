@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Répertoire des Écoles</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="ecoles.html">Répertoire des Écoles</a>
+  </nav>
+  <div class="container">
+    <h1>Répertoire des Écoles</h1>
+    <p>Utilisez les filtres pour trouver l'école qui correspond à vos critères.</p>
+
+    <!-- Filtres -->
+    <label for="type">Type :</label>
+    <select id="type">
+      <option value="">Tous</option>
+      <option value="publique">Publique</option>
+      <option value="privée">Privée</option>
+    </select>
+
+    <label for="prepa">Prépa :</label>
+    <select id="prepa">
+      <option value="">Tous</option>
+      <option value="sans prépa">Sans Prépa</option>
+      <option value="prépa intégrée">Prépa Intégrée</option>
+      <option value="prépa requise">Prépa Requise</option>
+    </select>
+
+    <label for="prix-slider">Prix max : <span id="prix-max">10000</span> €</label>
+    <input type="range" id="prix-slider" min="0" max="20000" step="100" value="10000">
+
+    <!-- Tableau -->
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Ville</th>
+          <th>Type</th>
+          <th>Prépa</th>
+          <th>Prix</th>
+          <th>Site Web</th>
+        </tr>
+      </thead>
+      <tbody id="universites-table">
+        <!-- Les données seront insérées ici via JavaScript -->
+      </tbody>
+    </table>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
