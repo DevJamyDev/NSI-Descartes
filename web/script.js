@@ -1,5 +1,5 @@
 // Charger les données depuis le fichier JSON
-fetch('../../Écoles/universites.json')
+fetch('../universites.json')
   .then(response => response.json())
   .then(data => {
     const tableBody = document.getElementById('universites-table');
