@@ -17,34 +17,34 @@
     <p>Remplissez ce formulaire pour proposer une nouvelle école à ajouter au répertoire.</p>
     
     <form id="form-ajout-ecole">
-      <label for="nom">Nom de l'École :</label>
+      <label for="nom">Nom de l'École :</label> 
       <input type="text" id="nom" name="nom" required>
-      
+      <br><br>
       <label for="ville">Ville :</label>
       <input type="text" id="ville" name="ville" required>
-      
+      <br><br>
       <label for="type">Type :</label>
       <select id="type" name="type" required>
         <option value="publique">Publique</option>
         <option value="privée">Privée</option>
       </select>
-      
+      <br><br>
       <label for="prepa">Prépa :</label>
       <select id="prepa" name="prepa" required>
         <option value="sans prépa">Sans Prépa</option>
         <option value="prépa intégrée">Prépa Intégrée</option>
         <option value="prépa requise">Prépa Requise</option>
       </select>
-      
+      <br><br>
       <label for="prix">Prix (en €) :</label>
       <input type="number" id="prix" name="prix" required>
-      
+      <br><br>
       <label for="site_web">Site Web :</label>
       <input type="url" id="site_web" name="site_web" required>
-      
+      <br><br>
       <button type="submit">Soumettre</button>
     </form>
-
+    
     <p id="message" style="margin-top: 1rem; color: green; display: none;">L'école a été ajoutée avec succès !</p>
   </div>
   <script src="script.js"></script>

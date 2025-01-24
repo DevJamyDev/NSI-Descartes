@@ -1,28 +1,26 @@
 [
-    {
-      "nom": "Université de Paris",
-      "type": "publique",
-      "prepa": "sans prépa",
-      "prix": 0,
-      "ville": "Paris",
-      "site_web": "https://www.u-paris.fr"
-    },
-    {
-      "nom": "École Polytechnique",
-      "type": "publique",
-      "prepa": "prépa intégrée",
-      "prix": 3000,
-      "ville": "Palaiseau",
-      "site_web": "https://www.polytechnique.edu"
-    },
-    {
-      "nom": "HEC Paris",
-      "type": "privée",
-      "prepa": "prépa requise",
-      "prix": 12000,
-      "ville": "Jouy-en-Josas",
-      "site_web": "https://www.hec.edu"
-    }
-    
-  ]
-  
+  {
+    "nom": "École Polytechnique",
+    "ville": "Palaiseau",
+    "type": "publique",
+    "prepa": "prépa requise",
+    "prix": 0,
+    "site_web": "https://www.polytechnique.edu"
+  },
+  {
+    "nom": "HEC Paris",
+    "ville": "Jouy-en-Josas",
+    "type": "privée",
+    "prepa": "prépa requise",
+    "prix": 50000,
+    "site_web": "https://www.hec.edu"
+  },
+  {
+    "nom": "INSA Lyon",
+    "ville": "Lyon",
+    "type": "publique",
+    "prepa": "prépa intégrée",
+    "prix": 601,
+    "site_web": "https://www.insa-lyon.fr"
+  }
+]

@@ -1,95 +1,71 @@
-fetch('../universites.json')
-  .then(response => {
-    if (!response.ok) throw new Error('Erreur de chargement des données');
-    return response.json();
-  })
-  .then(data => {
-    const tableBody = document.getElementById('universites-table');
-    const typeFilter = document.getElementById('type');
-    const prepaFilter = document.getElementById('prepa');
-    const prixSlider = document.getElementById('prix-slider');
-    const prixMaxLabel = document.getElementById('prix-max');
-
-    const displayData = () => {
-      const typeValue = typeFilter.value;
-      const prepaValue = prepaFilter.value;
-      const prixMax = parseInt(prixSlider.value, 10);
-
-      const filteredData = data.filter(univ => {
-        return (
-          (!typeValue || univ.type === typeValue) &&
-          (!prepaValue || univ.prepa === prepaValue) &&
-          univ.prix <= prixMax
-        );
-      });
-
-      tableBody.innerHTML = '';
-      filteredData.forEach(univ => {
-        const row = `
-          <tr>
-            <td>${univ.nom}</td>
-            <td>${univ.ville}</td>
-            <td>${univ.type}</td>
-            <td>${univ.prepa}</td>
-            <td>${univ.prix}€</td>
-            <td><a href="${univ.site_web}" target="_blank">Visiter</a></td>
-          </tr>
-        `;
-        tableBody.innerHTML += row;
-      });
-    };
-
-    prixSlider.addEventListener('input', () => {
-      prixMaxLabel.textContent = prixSlider.value;
-      displayData();
-    });
-
-    typeFilter.addEventListener('change', displayData);
-    prepaFilter.addEventListener('change', displayData);
-
-    displayData();
-  })
-  .catch(error => console.error('Erreur :', error));
-
-// Gérer l'ajout d'une nouvelle école
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('form-ajout-ecole');
-  const message = document.getElementById('message');
-
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Empêche le rechargement de la page
-
-      // Récupération des données du formulaire
-      const nouvelleEcole = {
-        nom: document.getElementById('nom').value,
-        ville: document.getElementById('ville').value,
-        type: document.getElementById('type').value,
-        prepa: document.getElementById('prepa').value,
-        prix: parseInt(document.getElementById('prix').value, 10),
-        site_web: document.getElementById('site_web').value
-      };
-
-      // Envoi des données au backend
-      try {
-        const response = await fetch('https://nsi-descartes.onrender.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(nouvelleEcole)
-        });
-
-        if (response.ok) {
-          message.style.display = 'block';
-          form.reset(); // Réinitialise le formulaire
-        } else {
-          alert("Une erreur s'est produite lors de l'ajout de l'école.");
-        }
-      } catch (error) {
-        console.error('Erreur :', error);
-        alert("Impossible de se connecter au serveur.");
-      }
-    });
+// Charger les données depuis le fichier JSON
+async function chargerEcoles() {
+  try {
+    const response = await fetch('../universites.json'); // Charger les données JSON
+    const ecoles = await response.json();
+    afficherEcoles(ecoles); // Afficher les écoles dans le tableau
+    activerTriColonnes(); // Activer la fonctionnalité de tri
+  } catch (error) {
+    console.error("Erreur lors du chargement des données :", error);
   }
+}
+
+// Afficher les écoles dans le tableau
+function afficherEcoles(ecoles) {
+  const tbody = document.querySelector('#table-ecoles tbody');
+  tbody.innerHTML = ''; // Réinitialiser les lignes du tableau
+
+  ecoles.forEach(ecole => {
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+      <td data-column="nom">${ecole.nom}</td>
+      <td data-column="ville">${ecole.ville}</td>
+      <td data-column="type">${ecole.type}</td>
+      <td data-column="prepa">${ecole.prepa}</td>
+      <td data-column="prix">${ecole.prix}</td>
+      <td data-column="site_web"><a href="${ecole.site_web}" target="_blank">Visiter</a></td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
+
+// Activer le tri des colonnes lors du clic sur les en-têtes
+function activerTriColonnes() {
+  const table = document.getElementById('table-ecoles');
+  const headers = table.querySelectorAll('thead th[data-column]');
+
+  headers.forEach(header => {
+    header.addEventListener('click', () => {
+      const column = header.getAttribute('data-column'); // Colonne à trier
+      const order = header.getAttribute('data-order'); // Ordre actuel (asc ou desc)
+      const tbody = table.querySelector('tbody');
+
+      // Récupérer et trier les lignes
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const aValue = a.querySelector(`td[data-column="${column}"]`)?.textContent.trim();
+        const bValue = b.querySelector(`td[data-column="${column}"]`)?.textContent.trim();
+
+        // Tri numérique ou alphabétique
+        if (column === 'prix') {
+          return (order === 'asc' ? 1 : -1) * (parseFloat(aValue) - parseFloat(bValue));
+        } else {
+          return (order === 'asc' ? 1 : -1) * aValue.localeCompare(bValue);
+        }
+      });
+
+      // Réinsérer les lignes triées dans le tableau
+      rows.forEach(row => tbody.appendChild(row));
+
+      // Alterner l'ordre de tri pour la prochaine fois
+      header.setAttribute('data-order', order === 'asc' ? 'desc' : 'asc');
+    });
+  });
+}
+
+// Charger les données et activer les fonctionnalités au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
+  chargerEcoles();
 });

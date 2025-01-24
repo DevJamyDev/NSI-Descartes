@@ -7,50 +7,34 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="ecoles.html">Répertoire des Écoles</a>
-  </nav>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="ecoles.html">Répertoire des Écoles</a>
+        <a href="ajouter-ecole.html">Ajouter une Éocle</a>
+    </nav>
+
   <div class="container">
     <h1>Répertoire des Écoles</h1>
-    <p>Utilisez les filtres pour trouver l'école qui correspond à vos critères.</p>
+    <p>Cliquez sur les en-têtes des colonnes pour trier le tableau.</p>
 
-    <!-- Filtres -->
-    <label for="type">Type :</label>
-    <select id="type">
-      <option value="">Tous</option>
-      <option value="publique">Publique</option>
-      <option value="privée">Privée</option>
-    </select>
-
-    <label for="prepa">Prépa :</label>
-    <select id="prepa">
-      <option value="">Tous</option>
-      <option value="sans prépa">Sans Prépa</option>
-      <option value="prépa intégrée">Prépa Intégrée</option>
-      <option value="prépa requise">Prépa Requise</option>
-    </select>
-
-    <label for="prix-slider">Prix max : <span id="prix-max">10000</span> €</label>
-    <input type="range" id="prix-slider" min="0" max="20000" step="100" value="10000">
-
-    <!-- Tableau -->
-    <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Ville</th>
-          <th>Type</th>
-          <th>Prépa</th>
-          <th>Prix</th>
-          <th>Site Web</th>
-        </tr>
-      </thead>
-      <tbody id="universites-table">
-        <!-- Les données seront insérées ici via JavaScript -->
-      </tbody>
-    </table>
+    <table id="table-ecoles">
+        <thead>
+          <tr>
+            <th data-column="nom" data-order="asc">Nom</th>
+            <th data-column="ville" data-order="asc">Ville</th>
+            <th data-column="type" data-order="asc">Type</th>
+            <th data-column="prepa" data-order="asc">Prépa</th>
+            <th data-column="prix" data-order="asc">Prix (€)</th>
+            <th data-column="site_web">Site Web</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Les lignes seront générées dynamiquement -->
+        </tbody>
+      </table>
+      
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
